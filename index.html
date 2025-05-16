@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Area to Square Feet Converter</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      color: #fff;
+    }
+    header {
+      background-color: rgba(0, 0, 0, 0.3);
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+    nav a {
+      color: #fff;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .tool-box {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+    }
+    select, input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #fff;
+      color: #0072ff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .section {
+      padding: 20px;
+      background: rgba(255,255,255,0.05);
+      margin: 20px auto;
+      max-width: 600px;
+      border-radius: 12px;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #e0f7ff;
+    }
+    .contact-links a {
+      color: #fff;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Divisor Studio Tools</h1>
+    <nav>
+      <a href="#about">About Us</a>
+      <a href="#contact">Connect Us</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="tool-box">
+      <h2>Convert Area to Square Feet</h2>
+      <select id="unitType" onchange="toggleFields()">
+        <option value="mm">mm × mm</option>
+        <option value="inch">inch × inch</option>
+        <option value="sqm">Square Metres</option>
+      </select>
+
+      <div id="dimensionFields">
+        <input type="number" id="length" placeholder="Length" />
+        <input type="number" id="width" placeholder="Width" />
+      </div>
+
+      <input type="number" id="area" placeholder="Area in sqm" style="display:none;" />
+
+      <button onclick="convertToSqft()">Convert</button>
+
+      <div class="result" id="result"></div>
+    </div>
+  </div>
+
+  <div class="section" id="about">
+    <h2>About Us</h2>
+    <p>Divisor Studios is a digital brand led by M Qasim that builds creative websites and utility tools to solve real-world problems. We focus on design, simplicity, and user-friendly interfaces to make tools that help in daily business and technical tasks.</p>
+  </div>
+
+  <div class="section" id="contact">
+    <h2>Connect With Us</h2>
+    <div class="contact-links">
+      <p>Email: <a href="mailto:mohdqasim4579@gmail.com">mohdqasim4579@gmail.com</a></p>
+      <p><a href="https://wa.me/9193557108" target="_blank">Message us on WhatsApp</a></p>
+    </div>
+  </div>
+
+  <footer>
+    M Qasim's Divisor Studio Presents
+  </footer>
+
+  <script>
+    function toggleFields() {
+      const type = document.getElementById("unitType").value;
+      const dimensionFields = document.getElementById("dimensionFields");
+      const areaField = document.getElementById("area");
+
+      if (type === "sqm") {
+        dimensionFields.style.display = "none";
+        areaField.style.display = "block";
+      } else {
+        dimensionFields.style.display = "block";
+        areaField.style.display = "none";
+      }
+    }
+
+    function convertToSqft() {
+      const type = document.getElementById("unitType").value;
+      let sqft = 0;
+
+      if (type === "mm") {
+        const length = parseFloat(document.getElementById("length").value);
+        const width = parseFloat(document.getElementById("width").value);
+        if (!isNaN(length) && !isNaN(width)) {
+          const area_mm2 = length * width;
+          sqft = area_mm2 * 0.0000107639;
+        }
+      } else if (type === "inch") {
+        const length = parseFloat(document.getElementById("length").value);
+        const width = parseFloat(document.getElementById("width").value);
+        if (!isNaN(length) && !isNaN(width)) {
+          const area_in2 = length * width;
+          sqft = area_in2 * 0.00694444;
+        }
+      } else if (type === "sqm") {
+        const area = parseFloat(document.getElementById("area").value);
+        if (!isNaN(area)) {
+          sqft = area * 10.7639;
+        }
+      }
+
+      document.getElementById("result").innerText =
+        sqft > 0 ? `Area: ${sqft.toFixed(2)} sq ft` : "Please enter valid values";
+    }
+  </script>
+</body>
+</html>
